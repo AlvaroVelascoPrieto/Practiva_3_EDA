@@ -7,7 +7,6 @@ public class GraphHash {
     HashMap<String, ArrayList<String>> g;
 
     public void crearGrafo(ListaActores lActores) {
-
     // Post: crea el grafo desde la lista de actores
     // Los nodos son nombres de actores
 

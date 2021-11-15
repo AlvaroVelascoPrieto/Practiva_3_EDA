@@ -6,12 +6,11 @@ import java.util.HashMap;
 public class GraphHash {
     HashMap<String, ArrayList<String>> g;
 
-    public void crearGrafo(ListaActores lActores) {
+    public void crearGrafo(org.eda.packlaboratorio1.ListaActores lActores) {
     // Post: crea el grafo desde la lista de actores
     // Los nodos son nombres de actores
-
     // COMPLETAR CÓDIGO
-
+    g.put(lActores)
     }
 
     public void print() {

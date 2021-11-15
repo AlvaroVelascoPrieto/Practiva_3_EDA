@@ -60,6 +60,8 @@ public class ListaPeliculas {
         catch (IOException e) {e.printStackTrace();}
     }
 
+    public ListaActores devolverTodosLosActores(){return this.todos;}
+
     public Actor buscarActor(String pNombre){
         return todos.buscarActor(pNombre);
     }

@@ -1,4 +1,4 @@
-package org.eda.packlaboratorio1;
+package org.eda.packlaboratorio3;
 
 import java.util.ArrayList;
 import java.util.HashMap;

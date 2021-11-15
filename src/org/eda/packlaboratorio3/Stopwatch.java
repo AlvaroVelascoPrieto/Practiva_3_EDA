@@ -1,4 +1,4 @@
-package org.eda.packlaboratorio1;
+package org.eda.packlaboratorio3;
 
 public class Stopwatch {
 

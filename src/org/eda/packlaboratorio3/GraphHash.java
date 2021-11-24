@@ -1,9 +1,6 @@
 package org.eda.packlaboratorio3;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class GraphHash {
     HashMap<String, ArrayList<String>> g;
@@ -49,6 +46,23 @@ public class GraphHash {
 
     public boolean estanConectados(String a1, String a2) {
         // COMPLETAR CÓDIGO
-        return true;
+        HashMap<String,String> visitados = new HashMap<String, String>();
+        Queue<String> cola = new LinkedList<String>();
+        cola.add(a1);
+        while (!cola.isEmpty()){
+            ArrayList<String> adyacentes = g.get(cola.peek());
+            Iterator<String> itr = adyacentes.iterator();
+            while (itr.hasNext()){
+                String act = itr.next();
+                if (a2.equals(act)){
+                    return true;
+                }
+                else if(!visitados.containsKey(act)){
+                    cola.add(act);
+                }
+            }
+            visitados.put(cola.peek(),cola.poll());
+        }
+        return false;
     }
 }

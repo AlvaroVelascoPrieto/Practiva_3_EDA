@@ -11,6 +11,7 @@ public class ListaPeliculas {
     private HashMap<String,Pelicula> peliculas;
     private ListaActores todos;
     private static ListaPeliculas miListaPeliculas;
+    private HashMap<String, HashMap<String,Pelicula>> pelisPorActor;
 
     //Constructora
     private ListaPeliculas(){
@@ -31,6 +32,7 @@ public class ListaPeliculas {
         try {
             Scanner archivo = new Scanner(new FileReader(pNombreArchivo));
             String linea;
+            pelisPorActor = new HashMap<>();
 
             while (archivo.hasNextLine()){
                 linea = archivo.nextLine();
@@ -39,18 +41,23 @@ public class ListaPeliculas {
                 String Actores=part[1];
 
                 String[] tablaAct =Actores.split("\\s+#{1,}+\\s");
-                peliculas.put(pelicula, new Pelicula(pelicula,0));
+                Pelicula pel = new Pelicula(pelicula,0);
+                peliculas.put(pelicula, pel);
                 int i=0;
                 while (i<(tablaAct.length)){
+                    Actor miActor;
                     if(todos.contiene(tablaAct[i])){
-                        Actor miActor = todos.buscarActor(tablaAct[i]);
+                        miActor = todos.buscarActor(tablaAct[i]);
                         peliculas.get(pelicula).insertarActor(miActor);
                     }
                     else{
-                        Actor miActor = new Actor(tablaAct[i]);
+                        miActor = new Actor(tablaAct[i]);
                         peliculas.get(pelicula).insertarActor(miActor);
                         todos.insertarActor(miActor);
+                        pelisPorActor.put(miActor.getNombre(),new HashMap<>());
                     }
+                    todos.buscarActor(miActor.getNombre());
+                    pelisPorActor.get(miActor.getNombre()).put(pelicula, pel);
                     i++;
                 }
             }
@@ -107,15 +114,7 @@ public class ListaPeliculas {
 
 
     public HashMap<String,Pelicula> devolverPeliculas(String pActor){
-        HashMap<String, Actor> actores;
-        HashMap<String,Pelicula> peliculasADevolver = new HashMap<String,Pelicula>();
-        for (Map.Entry<String, Pelicula> entry : peliculas.entrySet()) {
-            actores = entry.getValue().devolverActores();
-            if (actores.containsKey(pActor)){
-                peliculasADevolver.put(entry.getKey(),entry.getValue());
-            }
-        }
-        return peliculasADevolver;
+        return pelisPorActor.get(pActor);
     }
 
     public void guardarListaEnFichero(String pDireccionFichero){

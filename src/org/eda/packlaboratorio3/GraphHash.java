@@ -44,25 +44,37 @@ public class GraphHash {
         }
     }
 
-    public boolean estanConectados(String a1, String a2) {
-        // COMPLETAR CÓDIGO
-        HashMap<String,String> visitados = new HashMap<String, String>();
-        Queue<String> cola = new LinkedList<String>();
-        cola.add(a1);
-        while (!cola.isEmpty()){
-            ArrayList<String> adyacentes = g.get(cola.peek());
-            Iterator<String> itr = adyacentes.iterator();
-            while (itr.hasNext()){
-                String act = itr.next();
-                if (a2.equals(act)){
-                    return true;
-                }
-                else if(!visitados.containsKey(act)){
-                    cola.add(act);
+    public boolean estanConectados(String a1, String a2){
+        Stack<String> pila = new Stack<>();
+        HashMap<String, String> visitado = new HashMap<String,String>();
+        pila.push(a1);
+        visitado.put(a1,a1);
+        while(!pila.isEmpty()) {
+            String aux=pila.pop();
+            if(aux.equals(a2)) {
+                return true;
+            }
+            else {
+                for (String act : g.get(aux)) {
+                    if (!visitado.containsKey(act)) {
+                        pila.push(act);
+                        visitado.put(act, act);
+                    }
                 }
             }
-            visitados.put(cola.peek(),cola.poll());
         }
         return false;
+    }
+
+    public void calcularConexiones(int n){
+        Random randomGenerator = new Random();
+        Object[] a = g.keySet().toArray();
+
+        for (int i = 1; i <= n; i++){
+            int x = randomGenerator.nextInt(g.size());
+            int y = randomGenerator.nextInt(g.size());
+            System.out.println("Prueba: " + i + " ");
+            System.out.println(estanConectados((String) a[x], (String) a[y]));
+        }
     }
 }
